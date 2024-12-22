@@ -86,3 +86,10 @@ export type InvoiceForm = {
   amount: number;
   status: 'pending' | 'paid';
 };
+
+export type WalletAddress = {
+  id: string;
+  network: string;
+  address: string;
+  name: string;
+}
