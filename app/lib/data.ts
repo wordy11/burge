@@ -6,8 +6,11 @@ import {
   InvoicesTable,
   LatestInvoiceRaw,
   Revenue,
+  WalletAddress,
 } from './definitions';
 import { formatCurrency } from './utils';
+import { Host } from './common';
+import {redirect} from 'next/navigation'
 
 export async function fetchRevenue() {
   try {
@@ -141,77 +144,168 @@ export async function fetchInvoicesPages(query: string) {
 }
 
 export async function fetchInvoiceById(id: string) {
+  const apiUrl = `http://localhost:8000/api/invoices/${id}`;
+
   try {
-    const data = await sql<InvoiceForm>`
-      SELECT
-        invoices.id,
-        invoices.customer_id,
-        invoices.amount,
-        invoices.status
-      FROM invoices
-      WHERE invoices.id = ${id};
-    `;
+    // Make the fetch request to the backend API
+    const response = await fetch(apiUrl);
 
-    const invoice = data.rows.map((invoice) => ({
-      ...invoice,
-      // Convert amount from cents to dollars
-      amount: invoice.amount / 100,
-    }));
+    // Check if the response is OK (status code 2xx)
+    if (!response.ok) {
+      throw new Error('Failed to fetch invoice.');
+    }
 
-    return invoice[0];
+    // Parse the JSON response
+    const data = await response.json();
+
+    // Convert amount from cents to dollars
+    const invoice = {
+      ...data,
+      amount: data.amount / 100, // Convert amount to dollars
+    };
+
+    return invoice;
   } catch (error) {
-    console.error('Database Error:', error);
+    console.error('Request Error:', error);
     throw new Error('Failed to fetch invoice.');
   }
 }
 
-export async function fetchCustomers() {
-  try {
-    const data = await sql<CustomerField>`
-      SELECT
-        id,
-        name
-      FROM customers
-      ORDER BY name ASC
-    `;
 
-    const customers = data.rows;
-    return customers;
-  } catch (err) {
-    console.error('Database Error:', err);
+export async function fetchCustomers() {
+  const apiUrl = 'http://localhost:8000/api/customers';
+
+  try {
+    // Make the fetch request to the backend API
+    const response = await fetch(apiUrl);
+
+    // Check if the response is OK (status code 2xx)
+    if (!response.ok) {
+      throw new Error('Failed to fetch customers.');
+    }
+
+    // Parse the JSON response
+    const data = await response.json();
+
+    // Assuming the response contains the customers array
+    return data.rows;
+  } catch (error) {
+    console.error('Request Error:', error);
     throw new Error('Failed to fetch all customers.');
   }
 }
 
-export async function fetchFilteredCustomers(query: string) {
-  try {
-    const data = await sql<CustomersTableType>`
-		SELECT
-		  customers.id,
-		  customers.name,
-		  customers.email,
-		  customers.image_url,
-		  COUNT(invoices.id) AS total_invoices,
-		  SUM(CASE WHEN invoices.status = 'pending' THEN invoices.amount ELSE 0 END) AS total_pending,
-		  SUM(CASE WHEN invoices.status = 'paid' THEN invoices.amount ELSE 0 END) AS total_paid
-		FROM customers
-		LEFT JOIN invoices ON customers.id = invoices.customer_id
-		WHERE
-		  customers.name ILIKE ${`%${query}%`} OR
-        customers.email ILIKE ${`%${query}%`}
-		GROUP BY customers.id, customers.name, customers.email, customers.image_url
-		ORDER BY customers.name ASC
-	  `;
 
-    const customers = data.rows.map((customer) => ({
+export async function fetchFilteredCustomers(query: string) {
+  const apiUrl = `http://localhost:8000/api/customers?query=${encodeURIComponent(query)}`;
+
+  try {
+    // Make the fetch request to the backend API
+    const response = await fetch(apiUrl);
+
+    // Check if the response is OK (status code 2xx)
+    if (!response.ok) {
+      throw new Error('Failed to fetch customers.');
+    }
+
+    // Parse the JSON response
+    const data = await response.json();
+
+    // Assuming the response contains the filtered customer data
+    const customers = data.rows.map((customer: any) => ({
       ...customer,
       total_pending: formatCurrency(customer.total_pending),
       total_paid: formatCurrency(customer.total_paid),
     }));
 
     return customers;
-  } catch (err) {
-    console.error('Database Error:', err);
+  } catch (error) {
+    console.error('Request Error:', error);
     throw new Error('Failed to fetch customer table.');
   }
 }
+
+
+export async function fetchWallets() {
+  const apiUrl = `${Host}/api/wallets/`;
+
+  try {
+    // Make the fetch request to the backend API
+    const response = await fetch(apiUrl);
+
+    // Check if the response is OK (status code 2xx)
+    if (!response.ok) {
+      throw new Error('Failed to fetch wallets.');
+    }
+
+    // Parse the JSON response
+    const responseObject = await response.text();  // You could use .text() or .blob() depending on what format you need
+   // See the raw response (stringified)
+
+    // If you want to parse the response to a JavaScript object manually:
+    const data = JSON.parse(responseObject); // If it's JSON-formatted
+    return data;
+  } catch (error) {
+    console.error('Request Error:', error);
+    throw new Error('Failed to fetch wallets.');
+  }
+}
+
+export async function fetchPlans() {
+  const apiUrl = `${Host}/api/plans/`;
+
+  try {
+    // Make the fetch request to the backend API
+    const response = await fetch(apiUrl);
+
+    // Check if the response is OK (status code 2xx)
+    if (!response.ok) {
+      throw new Error('Failed to fetch wallets.');
+    }
+
+    // Parse the JSON response
+    const responseObject = await response.text();  // You could use .text() or .blob() depending on what format you need
+     // See the raw response (stringified)
+
+    // If you want to parse the response to a JavaScript object manually:
+    const data = JSON.parse(responseObject); // If it's JSON-formatted
+    return data;
+  } catch (error) {
+    console.error('Request Error:', error);
+    throw new Error('Failed to fetch wallets.');
+  }
+}
+
+export async function fetchUser(token: string) {
+  const apiUrl = `${Host}/user-details/`;
+
+  try {
+      // Make the fetch request to the backend API with Authorization header
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,  // Add the JWT token to the Authorization header
+        },
+      });
+
+      if (response.status != 200) {
+        return null;
+      }
+
+    // Parse the JSON response
+    const responseObject = await response.text();  // You could use .text() or .blob() depending on what format you need // See the raw response (stringified)
+
+    // If you want to parse the response to a JavaScript object manually:
+    const data = JSON.parse(responseObject); // If it's JSON-formatted
+    return data;
+  } catch (error) {
+    // if (response.status !== 200) {
+    //   redirect('/user/login');
+    // }
+    console.error('Request Error:', error);
+    throw new Error('Failed to fetch wallets.');
+  }
+}
+
+

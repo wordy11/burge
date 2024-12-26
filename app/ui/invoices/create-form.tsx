@@ -1,129 +1,270 @@
-'use client';
-import { CustomerField } from '@/app/lib/definitions';
-import Link from 'next/link';
-import {
-  CheckIcon,
-  ClockIcon,
-  CurrencyDollarIcon,
-  UserCircleIcon,
-} from '@heroicons/react/24/outline';
-import { Button } from '@/app/ui/button';
-import { createInvoice, State } from '@/app/lib/actions';
-import { useActionState } from 'react';
+"use client";
+import { Host } from '@/app/lib/common';
+import React, { useState, useEffect } from 'react';
 
-export default function Form({ customers }: { customers: CustomerField[] }) {
-  const initialState: State = { message: null, errors: {} };
-  const [state, formAction] = useActionState(createInvoice, initialState);
+interface FormData {
+  wallet: string;
+  amount: number;
+  transaction_type: string; // 'deposit' or 'withdrawal'
+  asset_symbol: string;
+  asset_name: string;
+  from_address: string;
+  to_address: string;
+  transaction_hash: string;
+}
+
+interface Wallet {
+  id: string;
+  balance: string;
+  username: string;
+  user_wallet: {
+    id: string;
+    balance: any;
+  };
+}
+
+const TransactionForm: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
+    wallet: '',
+    amount: 0,
+    transaction_type: 'deposit',
+    asset_symbol: '',
+    asset_name: '',
+    from_address: '',
+    to_address: '',
+    transaction_hash: '',
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [wallets, setWallets] = useState<Wallet[]>([]);
+
+  useEffect(() => {
+    // Fetch wallet IDs from the API
+    const fetchWallets = async () => {
+      try {
+        const response = await fetch(`${Host}/users-with-wallet/`); // Assuming the endpoint is '/api/wallets'
+        if (!response.ok) {
+          throw new Error('Failed to fetch wallets');
+        }
+        const data = await response.json();
+        setWallets(data); // Assuming the API returns an array of wallets
+      } catch (err) {
+        setError('Failed to load wallets');
+      }
+    };
+
+    fetchWallets();
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      console.log("Form Data:", formData);
+      const response = await fetch(`${Host}/api/create-transaction/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Transaction failed');
+      }
+
+      const data = await response.json();
+      setSuccess('Transaction successfully created!');
+      setFormData({
+        wallet: '',
+        amount: 0,
+        transaction_type: 'deposit',
+        asset_symbol: '',
+        asset_name: '',
+        from_address: '',
+        to_address: '',
+        transaction_hash: '',
+      });
+    } catch (err) {
+      setError('Error creating transaction');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
   return (
-    <form action={formAction}>
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        {/* Customer Name */}
-        <div className="mb-4">
-          <label htmlFor="customer" className="mb-2 block text-sm font-medium">
-            Choose customer
-          </label>
-          <div className="relative">
-            <select
-              id="customer"
-              name="customerId"
-              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue=""
-              required
-              aria-describedby="customer-error"
-            >
-              <option value="" disabled>
-                Select a customer
-              </option>
-              {customers.map((customer) => (
-                <option key={customer.id} value={customer.id}>
-                  {customer.name}
-                </option>
-              ))}
-            </select>
-            <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
-          </div>
-          <div id="customer-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.customerId &&
-              state.errors.customerId.map((error: string) => (
-                <p className="mt-2 text-sm text-red-500" key={error}>
-                  {error}
-                </p>
-            ))}
-        </div>
-        </div>
+    <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-md">
+      <h2 className="text-2xl font-semibold text-center mb-4">Create Transaction</h2>
 
-        {/* Invoice Amount */}
-        <div className="mb-4">
-          <label htmlFor="amount" className="mb-2 block text-sm font-medium">
-            Choose an amount
-          </label>
-          <div className="relative mt-2 rounded-md">
-            <div className="relative">
-              <input
-                id="amount"
-                name="amount"
-                type="number"
-                step="0.01"
-                placeholder="Enter USD amount"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                required
-              />
-              <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-            </div>
-          </div>
-        </div>
-
-        {/* Invoice Status */}
-        <fieldset>
-          <legend className="mb-2 block text-sm font-medium">
-            Set the invoice status
-          </legend>
-          <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
-            <div className="flex gap-4">
-              <div className="flex items-center">
-                <input
-                  id="pending"
-                  name="status"
-                  type="radio"
-                  value="pending"
-                  className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                />
-                <label
-                  htmlFor="pending"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600"
-                >
-                  Pending <ClockIcon className="h-4 w-4" />
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="paid"
-                  name="status"
-                  type="radio"
-                  value="paid"
-                  className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                  required
-                />
-                <label
-                  htmlFor="paid"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-green-500 px-3 py-1.5 text-xs font-medium text-white"
-                >
-                  Paid <CheckIcon className="h-4 w-4" />
-                </label>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-      </div>
-      <div className="mt-6 flex justify-end gap-4">
-        <Link
-          href="/dashboard/admin"
-          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+      {/* Wallet */}
+      <div className="mb-4">
+        <label htmlFor="wallet" className="block text-sm font-medium text-gray-700">
+          Wallet ID
+        </label>
+        <select
+          id="wallet"
+          name="wallet"
+          value={formData.wallet}
+          onChange={handleChange}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          required
         >
-          Cancel
-        </Link>
-        <Button type="submit">Create Invoice</Button>
+          <option value="">Select Wallet</option>
+          {wallets.map((wallet) => (
+  wallet.user_wallet ? (
+    <option key={wallet.id} value={wallet.user_wallet.id}>
+      {wallet.username} Balance: ${wallet.user_wallet.balance}
+    </option>
+  ) : null
+))}
+
+        </select>
       </div>
+
+      {/* Amount */}
+      <div className="mb-4">
+        <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
+          Amount
+        </label>
+        <input
+          type="number"
+          id="amount"
+          name="amount"
+          value={formData.amount}
+          onChange={handleChange}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          required
+        />
+      </div>
+
+      {/* Transaction Type */}
+      <div className="mb-4">
+        <label htmlFor="transaction_type" className="block text-sm font-medium text-gray-700">
+          Transaction Type
+        </label>
+        <select
+          id="transaction_type"
+          name="transaction_type"
+          value={formData.transaction_type}
+          onChange={handleChange}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          required
+        >
+          <option value="deposit">Deposit</option>
+          <option value="withdrawal">Withdrawal</option>
+        </select>
+      </div>
+
+      {/* Asset Symbol */}
+      <div className="mb-4">
+        <label htmlFor="asset_symbol" className="block text-sm font-medium text-gray-700">
+          Asset Symbol
+        </label>
+        <input
+          type="text"
+          id="asset_symbol"
+          name="asset_symbol"
+          value={formData.asset_symbol}
+          onChange={handleChange}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          required
+        />
+      </div>
+
+      {/* Asset Name */}
+      <div className="mb-4">
+        <label htmlFor="asset_name" className="block text-sm font-medium text-gray-700">
+          Asset Name
+        </label>
+        <input
+          type="text"
+          id="asset_name"
+          name="asset_name"
+          value={formData.asset_name}
+          onChange={handleChange}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          required
+        />
+      </div>
+
+      {/* From Address */}
+      <div className="mb-4">
+        <label htmlFor="from_address" className="block text-sm font-medium text-gray-700">
+          From Address
+        </label>
+        <input
+          type="text"
+          id="from_address"
+          name="from_address"
+          value={formData.from_address}
+          onChange={handleChange}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          required
+        />
+      </div>
+
+      {/* To Address */}
+      <div className="mb-4">
+        <label htmlFor="to_address" className="block text-sm font-medium text-gray-700">
+          To Address
+        </label>
+        <input
+          type="text"
+          id="to_address"
+          name="to_address"
+          value={formData.to_address}
+          onChange={handleChange}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          required
+        />
+      </div>
+
+      {/* Transaction Hash */}
+      <div className="mb-4">
+        <label htmlFor="transaction_hash" className="block text-sm font-medium text-gray-700">
+          Transaction Hash
+        </label>
+        <input
+          type="text"
+          id="transaction_hash"
+          name="transaction_hash"
+          value={formData.transaction_hash}
+          onChange={handleChange}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          required
+        />
+      </div>
+
+      {/* Submit Button */}
+      <div className="flex justify-center">
+        <button
+          type="submit"
+          disabled={loading}
+          className={`w-full py-2 px-4 mt-4 ${loading ? 'bg-gray-500' : 'bg-blue-600'} text-white rounded-md hover:bg-blue-700 focus:outline-none`}
+        >
+          {loading ? 'Processing...' : 'Submit Transaction'}
+        </button>
+      </div>
+
+      {/* Success or Error Message */}
+      {error && <div className="text-red-500 mt-4">{error}</div>}
+      {success && <div className="text-green-500 mt-4">{success}</div>}
     </form>
   );
-}
+};
+
+export default TransactionForm;
