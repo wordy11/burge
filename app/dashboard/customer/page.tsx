@@ -29,6 +29,12 @@ const DashboardPage: React.FC = () => {
     const fetchData = async () => {
       try {
         setLoading(true); // Start loading
+        const token = localStorage.getItem('jwtToken');  // Example of getting token from localStorage
+        if (!token) {
+          setTimeout(() => {
+            redirect('/user/login'); // Redirect to login page if no token
+          }, 2000);
+        }
 
         // Fetch wallet data and plans asynchronously
         const walletsData = await fetchWallets();
@@ -64,7 +70,7 @@ const DashboardPage: React.FC = () => {
     return <div>Loading...</div>; // Display a loading state while fetching data
   }
 
-  console.log(user)
+  // console.log(user)
 
   // Render the dashboard after data has been fetched
   return (
