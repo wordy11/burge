@@ -36,8 +36,9 @@ const LoginPage: React.FC = () => {
     const data = await res.json();
 
     if (res.ok) {
-      console.log(data.access_token);
-      localStorage.setItem('jwtToken', data.access_token);
+      // console.log(data.access_token);
+      // localStorage.setItem('jwtToken', data.access_token);
+      document.cookie = `token=${data.access_token}; path=/; secure; samesite=strict; max-age=86400`;
       redirect('/dashboard/customer');
     } else {
       setError(data.message || 'An error occurred during login.');
