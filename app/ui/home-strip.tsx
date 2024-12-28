@@ -6,7 +6,7 @@ export default function ResponsiveStrip() {
     <div className="w-full rounded-md p-2">
       <div className="flex flex-wrap justify-between space-x-1 border-solid border-gray-200">
         {/* First image div */}
-        <div className="w-1/4 sm:w-1/4">
+        <div className="w-1/5 sm:w-1/5">
           <Image
             src="/strip1.png"
             width={500}
@@ -24,7 +24,7 @@ export default function ResponsiveStrip() {
         </div>
 
         {/* Second image div */}
-        <div className="w-1/4 sm:w-1/4">
+        <div className="w-1/5 sm:w-1/5">
           <Image
             src="/strip4.png"
             width={500}
@@ -42,7 +42,7 @@ export default function ResponsiveStrip() {
         </div>
 
         {/* Third image div */}
-        <div className="w-1/4 sm:w-1/4 sm:pt-3 justify-right">
+        <div className="w-1/5 sm:w-1/5 sm:pt-3 justify-right">
           <Image
             src="/strip2.png"
             width={300}
@@ -52,6 +52,23 @@ export default function ResponsiveStrip() {
           />
           <Image
             src="/strip2.png"
+            width={80}
+            height={80}
+            className="block md:hidden"
+            alt="Screenshots of the dashboard project showing desktop version"
+          />
+        </div>
+
+        <div className="w-1/5 sm:w-1/5 sm:pt-3 justify-right">
+          <Image
+            src="/strip3.png"
+            width={300}
+            height={300}
+            className="hidden md:block"
+            alt="Screenshots of the dashboard project showing desktop version"
+          />
+          <Image
+            src="/strip3.png"
             width={80}
             height={80}
             className="block md:hidden"

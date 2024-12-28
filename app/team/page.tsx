@@ -47,7 +47,7 @@ export default function MeetOurTeamSection() {
                 height={160}
                 className="w-40 h-40 rounded-full mx-auto mb-6 transition-transform duration-300 transform hover:scale-110"
               />
-              <p className="text-2xl font-semibold mb-2 text-white">John Doe</p>
+              <p className="text-2xl font-semibold mb-2 text-dark-gray-blue">John Doe</p>
               <p className="text-lg text-blue-600 mb-4">CEO & Founder</p>
               <p className="text-sm sm:text-base text-gray-600">
                 John is the visionary behind our platform, leading the team with a passion for innovation and customer satisfaction.
@@ -65,7 +65,7 @@ export default function MeetOurTeamSection() {
                 height={160}
                 className="w-40 h-40 rounded-full mx-auto mb-6 transition-transform duration-300 transform hover:scale-110"
               />
-              <p className="text-2xl font-semibold mb-2 text-white">Jane Smith</p>
+              <p className="text-2xl font-semibold mb-2 text-dark-gray-blue">Jane Smith</p>
               <p className="text-lg text-blue-600 mb-4">COO & Operations</p>
               <p className="text-sm sm:text-base text-gray-600">
                 Jane ensures the day-to-day operations run smoothly, working tirelessly to optimize our services and customer experience.
@@ -83,7 +83,7 @@ export default function MeetOurTeamSection() {
                 height={160}
                 className="w-40 h-40 rounded-full mx-auto mb-6 transition-transform duration-300 transform hover:scale-110"
               />
-              <p className="text-2xl font-semibold mb-2 text-white">Michael Lee</p>
+              <p className="text-2xl font-semibold mb-2 text-dark-gray-blue">Michael Lee</p>
               <p className="text-lg text-blue-600 mb-4">CTO & Tech Lead</p>
               <p className="text-sm sm:text-base text-gray-600">
                 Michael is the tech guru behind our platform, overseeing the development and ensuring our technology is cutting-edge.
@@ -106,7 +106,7 @@ export default function MeetOurTeamSection() {
                 height={160}
                 className="w-40 h-40 rounded-full mx-auto mb-6 transition-transform duration-300 transform hover:scale-110"
               />
-              <p className="text-2xl font-semibold mb-2 text-white">Alice Cooper</p>
+              <p className="text-2xl font-semibold mb-2 text-dark-gray-blue">Alice Cooper</p>
               <p className="text-lg text-blue-600 mb-4">Customer Support Lead</p>
               <p className="text-sm sm:text-base text-gray-600">
                 Alice is dedicated to providing excellent customer support, ensuring that our users always feel heard and valued.

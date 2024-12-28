@@ -27,14 +27,14 @@ export default function TwoColumnsSection() {
           {/* Right Column */}
           <div className="flex-1 flex justify-center items-center">
             <Image
-              src="/cc2.png"
+              src="/wedgt.png"
               width={1000}
               height={400}
               className="hidden md:block mb-3"
               alt="Screenshots of the dashboard project showing desktop version"
             />
             <Image
-              src="/cc3.jpeg"
+              src="/wedgt.png"
               width={600}
               height={600}
               className="block md:hidden"

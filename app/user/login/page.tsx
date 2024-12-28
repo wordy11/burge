@@ -48,8 +48,8 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="flex flex-col sm:flex-row w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-hidden">
+    <div className="flex items-center justify-center min-h-screen bg-dark-gray-blue">
+      <div className="flex flex-col sm:flex-row w-full max-w-4xl bg-dark-gray-blue overflow-hidden">
         {/* Left Column: Login Form */}
         <div className="w-full sm:w-1/2 p-6 md:p-8 flex flex-col items-center justify-center">
           {/* Logo Above the Form */}
@@ -57,7 +57,7 @@ const LoginPage: React.FC = () => {
             <AcmeLogo /> {/* Ensure logo is centered */}
           </div>
 
-          <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">Login</h2>
+          <h2 className="text-3xl font-semibold text-center text-white mb-6">Login</h2>
 
           {/* Error message */}
           {error && (
@@ -69,7 +69,7 @@ const LoginPage: React.FC = () => {
           {/* Login form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-600">
+              <label htmlFor="username" className="block text-sm font-medium text-white">
                 Username
               </label>
               <input
@@ -84,7 +84,7 @@ const LoginPage: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-600">
+              <label htmlFor="password" className="block text-sm font-medium text-white">
                 Password
               </label>
               <input
@@ -129,7 +129,7 @@ const LoginPage: React.FC = () => {
             height={760}
             unoptimized={true}
             alt="Login illustration"
-            className="object-cover w-full h-full"
+            className="object-cover w-full h-full rounded-xl"
           />
         </div>
       </div>

@@ -4,7 +4,7 @@ import ResponsiveStrip from '../ui/home-strip';
 
 const AboutUs = () => {
   return (
-    <div className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8 bg-dark-gray-blue">
+    <div className="py-16 px-4 sm:px-6 lg:px-8 bg-dark-gray-blue">
       <div className="max-w-7xl mx-auto text-center">
         {/* Title */}
         <h1 className="text-4xl sm:text-5xl font-semibold text-white">

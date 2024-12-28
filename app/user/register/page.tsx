@@ -70,16 +70,16 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100 md:flex-row">
+    <div className="flex flex-col min-h-screen bg-dark-gray-blue md:flex-row">
       {/* Right Column: Register Form */}
-      <div className="flex items-center justify-center w-full md:w-1/2 bg-white p-6 rounded-md shadow-lg">
+      <div className="flex items-center justify-center w-full md:w-1/2 bg-dark-gray-blue p-6">
         <div className="w-full max-w-md">
           {/* Logo above the form */}
           <div className="flex justify-center mb-6">
             <AcmeLogo />
           </div>
 
-          <h2 className="text-2xl font-semibold text-center mb-6">Create an Account</h2>
+          <h2 className="text-3xl font-semibold text-center text-white mb-6">Create an Account</h2>
 
           {/* Display error message */}
           {error && (
@@ -98,7 +98,7 @@ const RegisterPage: React.FC = () => {
           {/* Registration form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium">
+              <label htmlFor="name" className="block text-sm font-medium text-white">
                 User Name
               </label>
               <input
@@ -113,7 +113,7 @@ const RegisterPage: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium">
+              <label htmlFor="email" className="block text-sm font-medium text-white">
                 Email Address
               </label>
               <input
@@ -128,7 +128,7 @@ const RegisterPage: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium">
+              <label htmlFor="password" className="block text-sm font-medium text-white">
                 Password
               </label>
               <input
@@ -143,7 +143,7 @@ const RegisterPage: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-white">
                 Confirm Password
               </label>
               <input
@@ -167,7 +167,7 @@ const RegisterPage: React.FC = () => {
                 {loading ? 'Registering...' : 'Create Account'}
               </button>
             </div>
-            <div className="mt-4 text-center text-sm">
+            <div className="mt-4 text-center text-white text-sm">
             <p>
               Have an account?{' '}
               <a href="/user/login" className="text-blue-600 hover:underline">
@@ -180,13 +180,13 @@ const RegisterPage: React.FC = () => {
       </div>
 
       {/* Left Column: Image */}
-      <div className="flex flex-col items-center justify-center w-full md:w-1/2 bg-white p-6 md:p-12">
+      <div className="flex flex-col items-center justify-center w-full md:w-1/2 bg-dark-gray-blue p-6 md:p-12">
         <div className="flex justify-center mb-6">
           <Image
             src="/account (1).webp" // Replace with your image path
             alt="Register Image"
-            width={500} // Adjust the width as needed
-            height={400} // Adjust the height as needed
+            width={400} // Adjust the width as needed
+            height={300} // Adjust the height as needed
             className="object-cover"
           />
         </div>
