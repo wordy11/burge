@@ -49,6 +49,7 @@
 
 
 export default function Footer() {
+  var year = new Date().getFullYear();
   return (
     <footer className="bg-gray-800 text-white py-8">
       <div className="container mx-auto px-6 md:px-12">
@@ -112,7 +113,7 @@ export default function Footer() {
 
         {/* Bottom Copyright */}
         <div className="mt-8 text-center text-gray-400">
-          <p>&copy; 2024 Your Company. All Rights Reserved.</p>
+          <p>&copy; {`${year} Fortis Global Traders. All Rights Reserved`}.</p>
         </div>
       </div>
     </footer>
