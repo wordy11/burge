@@ -72,7 +72,7 @@ const RegisterPage: React.FC = () => {
         setError(data.message || 'An error occurred during registration.');
       }
     } catch (error) {
-      setError('An error occurred while trying to register. Please try again later.');
+      setError('This User Already Exists.');
     }
 
     setLoading(false);
