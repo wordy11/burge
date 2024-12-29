@@ -173,7 +173,7 @@ export default function NavbarComponent() {
             className="block md:hidden" // Only visible on small screens
           /> */}
           {/* Text */}
-          <p className="font-bold text-white text-xs sm:text-4xl">FORTIS GLOBAL TRADES</p>
+          <p className="font-bold text-white text-xs md:text-4xl">FORTIS GLOBAL TRADES</p>
         </NavbarBrand>
       </NavbarContent>
 
