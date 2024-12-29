@@ -83,9 +83,9 @@ const RegisterPage: React.FC = () => {
       {/* Right Column: Register Form */}
       <div className="flex items-center justify-center w-full md:w-1/2 bg-dark-gray-blue p-6">
         <div className="w-full max-w-md">
-          <div className="flex justify-center mb-6">
+          {/* <div className="flex justify-center mb-6">
             <AcmeLogo />
-          </div>
+          </div> */}
 
           <h2 className="text-3xl font-semibold text-center text-white mb-6">Create an Account</h2>
 

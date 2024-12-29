@@ -157,21 +157,21 @@ export default function NavbarComponent() {
         />
         <NavbarBrand className="gap-4">
           {/* Logo for large screens */}
-          <Image
+          {/* <Image
             src="/logo.jpeg"
             width={45}
             height={45}
             alt="Logo Large"
             className="hidden md:block" // Only visible on medium and larger screens
-          />
+          /> */}
           {/* Logo for small screens */}
-          <Image
+          {/* <Image
             src="/logo.jpeg"
             width={35} // Smaller size for small screens
             height={35}
             alt="Logo Small"
             className="block md:hidden" // Only visible on small screens
-          />
+          /> */}
           {/* Text */}
           <p className="font-bold text-white text-xs sm:text-4xl">FORTIS GLOBAL TRADES</p>
         </NavbarBrand>

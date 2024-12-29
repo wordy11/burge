@@ -53,9 +53,9 @@ const LoginPage: React.FC = () => {
         {/* Left Column: Login Form */}
         <div className="w-full sm:w-1/2 p-6 md:p-8 flex flex-col items-center justify-center">
           {/* Logo Above the Form */}
-          <div className="text-center mb-6 px-auto">
+          {/* <div className="text-center mb-6 px-auto">
             <AcmeLogo /> {/* Ensure logo is centered */}
-          </div>
+          {/* </div> */}
 
           <h2 className="text-3xl font-semibold text-center text-white mb-6">Login</h2>
 
