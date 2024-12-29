@@ -6,7 +6,7 @@ import Footer from './ui/footer';
 import TradingViewComponent from './ui/tickertape';
 import ElfsightWidget from './ui/el-sight-widget';
 import WhatsAppChat from './ui/whatsapp';
-
+import Head from 'next/head';
 export default function RootLayout({
   children,
 }: {
@@ -14,6 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <Head>
+        <link rel="icon" href="/logo.ico" />
+      </Head>
       <body className={`${inter.className} antialiased bg-dark-gray-blue`}>
         <Providers>
           <NavbarComponent />

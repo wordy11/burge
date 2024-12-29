@@ -15,6 +15,7 @@ const config: Config = {
       },
       colors: {
         'dark-gray-blue': '#1F2937',
+        gold: '#FFD700',
         blue: {
           400: '#2589FE',
           500: '#0070F3',

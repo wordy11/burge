@@ -95,6 +95,8 @@ import TwoColumnsSection from './ui/two-sections';
 import Banner from './ui/banner';
 import TestimonialSection from './ui/testimonials';
 import { useEffect, useRef } from 'react';
+import TrustpilotWidget from './ui/trust-pilot';
+import TrustPilotCarousel from './ui/trust-pilot';
 
 export default function Page() {
   const desktopImageRef = useRef<HTMLDivElement | null>(null);
@@ -210,6 +212,7 @@ export default function Page() {
       <TwoColumnsSection />
       <Banner />
       <TestimonialSection />
+      <TrustPilotCarousel />
       <div className="bg-dark-gray-blue text-white px-6 py-10 md:px-20 md:py-16 text-center rounded-lg shadow-lg">
         <h2 className="text-2xl md:text-4xl font-bold mb-4">
           Ready to Transform Your Business?

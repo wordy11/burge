@@ -7,7 +7,7 @@ export default function TestimonialSection() {
     <div className="w-full py-6">
       <div className="max-w-7xl mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl font-semibold mb-10 text-white">Testimonials</h2>
-        
+        <p className="text-4xl sm:text-6xl font-semibold mb-10 text-blue-500">What our investors are saying</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-6 px-4 sm:px-8">
           {/* Testimonial 1 */}
           <div className="transform transition-transform duration-500 hover:scale-105">
