@@ -49,7 +49,7 @@
 
 
 export default function Footer() {
-  var year = new Date().getFullYear();
+  var year = 2020;
   return (
     <footer className="bg-gray-800 text-white py-8">
       <div className="container mx-auto px-6 md:px-12">
