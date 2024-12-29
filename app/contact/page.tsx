@@ -1,6 +1,7 @@
 "use client";
 import { useState, ChangeEvent, FormEvent } from "react";
 import emailjs from "emailjs-com";
+import TradingViewTicker from "../ui/tickertape";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -44,7 +45,9 @@ const ContactPage = () => {
   };
 
   return (
+    <div>
     <div className="w-full py-16 bg-dark-gray-blue">
+      
       <div className="max-w-7xl mx-auto text-center px-4 sm:px-8">
         <h2 className="text-4xl sm:text-5xl font-semibold mb-6 text-white">Contact Us</h2>
         <p className="text-lg sm:text-xl text-white mb-12">
@@ -117,6 +120,7 @@ const ContactPage = () => {
 
         {/* Contact Information */}
       </div>
+    </div>
     </div>
   );
 };

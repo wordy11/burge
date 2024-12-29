@@ -1,6 +1,7 @@
 // pages/about.tsx
 import React from 'react';
 import ResponsiveStrip from '../ui/home-strip';
+import TradingViewTicker from '../ui/tickertape';
 
 const AboutUs = () => {
   return (

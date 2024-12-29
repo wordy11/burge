@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import TradingViewTicker from "../ui/tickertape";
 
 export default function MeetOurTeamSection() {
   return (

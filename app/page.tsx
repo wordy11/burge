@@ -97,6 +97,7 @@ import TestimonialSection from './ui/testimonials';
 import { useEffect, useRef } from 'react';
 import TrustpilotWidget from './ui/trust-pilot';
 import TrustPilotCarousel from './ui/trust-pilot';
+import TradingViewTicker from './ui/tickertape';
 
 export default function Page() {
   const desktopImageRef = useRef<HTMLDivElement | null>(null);
@@ -155,6 +156,7 @@ export default function Page() {
 
   return (
     <div>
+      <TradingViewTicker />
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
         <div className="flex flex-col justify-center gap-10 rounded-lg px-8 py-18 md:w-2/5 md:px-20 text-center">
           <p className={`${lusitana.className} antialiased text-5xl text-white md:text-5xl md:leading-normal`}>
@@ -162,7 +164,7 @@ export default function Page() {
           </p>
           <div className="flex justify-center">
             <Link
-              href="/login"
+              href="/user/login"
               className="flex gap-5 items-center rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
             >
               <span>Start Investing</span>
