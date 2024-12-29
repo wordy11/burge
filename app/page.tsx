@@ -164,7 +164,7 @@ export default function Page() {
           </p>
           <div className="flex justify-center">
             <Link
-              href="/user/login"
+              href="/user/register"
               className="flex gap-5 items-center rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
             >
               <span>Start Investing</span>

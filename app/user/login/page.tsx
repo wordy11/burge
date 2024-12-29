@@ -1,23 +1,20 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { redirect, useRouter } from 'next/navigation';  // Correct useRouter import
-import { Host } from '@/app/lib/common'; // Your Host URL (if needed)
+import { redirect } from 'next/navigation';
+import { Host } from '@/app/lib/common';
 import AcmeLogo from '@/app/ui/acme-logo';
 
 const LoginPage: React.FC = () => {
-
-  // State to store form values
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Handle form submission
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
-    setError(null); // Reset error state
+    setError(null);
 
     if (!username || !password) {
       setError('Please fill in all fields.');
@@ -36,8 +33,6 @@ const LoginPage: React.FC = () => {
     const data = await res.json();
 
     if (res.ok) {
-      // console.log(data.access_token);
-      // localStorage.setItem('jwtToken', data.access_token);
       document.cookie = `token=${data.access_token}; path=/; secure; samesite=strict; max-age=86400`;
       redirect('/dashboard/customer');
     } else {
@@ -52,11 +47,7 @@ const LoginPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row w-full max-w-4xl bg-dark-gray-blue overflow-hidden">
         {/* Left Column: Login Form */}
         <div className="w-full sm:w-1/2 p-6 md:p-8 flex flex-col items-center justify-center">
-          {/* Logo Above the Form */}
-          {/* <div className="text-center mb-6 px-auto">
-            <AcmeLogo /> {/* Ensure logo is centered */}
-          {/* </div> */}
-
+          <AcmeLogo />
           <h2 className="text-3xl font-semibold text-center text-white mb-6">Login</h2>
 
           {/* Error message */}
@@ -67,38 +58,67 @@ const LoginPage: React.FC = () => {
           )}
 
           {/* Login form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="username" className="block text-sm font-medium text-white">
-                Username
-              </label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
+          <form onSubmit={handleSubmit} className="space-y-6 w-full">
+            <div className="relative">
+              <div className="flex items-center border border-gray-300 rounded-md p-3 bg-gray-800">
+                {/* Username Icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 11c2.485 0 4.5-2.015 4.5-4.5S14.485 2 12 2 7.5 4.015 7.5 6.5 9.515 11 12 11zm0 2c-4.418 0-8 2.015-8 4.5V20h16v-2.5c0-2.485-3.582-4.5-8-4.5z"
+                  />
+                </svg>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="flex-1 ml-3 bg-transparent focus:outline-none text-white placeholder-gray-500"
+                  placeholder="Username"
+                  required
+                />
+              </div>
             </div>
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-white">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
+            <div className="relative">
+              <div className="flex items-center border border-gray-300 rounded-md p-3 bg-gray-800">
+                {/* Password Icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 11c2.485 0 4.5-2.015 4.5-4.5S14.485 2 12 2 7.5 4.015 7.5 6.5 9.515 11 12 11zm0 2c-4.418 0-8 2.015-8 4.5V20h16v-2.5c0-2.485-3.582-4.5-8-4.5z"
+                  />
+                </svg>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="flex-1 ml-3 bg-transparent focus:outline-none text-white placeholder-gray-500"
+                  placeholder="Password"
+                  required
+                />
+              </div>
             </div>
 
-            {/* Submit Button */}
             <div className="text-center">
               <button
                 type="submit"
@@ -124,7 +144,7 @@ const LoginPage: React.FC = () => {
         {/* Right Column: Image */}
         <div className="w-full sm:w-1/2">
           <Image
-            src="/customers/wave.gif" // Replace with your actual image path
+            src="/customers/wave.gif"
             width={1000}
             height={760}
             unoptimized={true}

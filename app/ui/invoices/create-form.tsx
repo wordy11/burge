@@ -126,7 +126,7 @@ const TransactionForm: React.FC = () => {
           <option value="">Select Wallet</option>
           {wallets.map((wallet) => (
   wallet.user_wallet ? (
-    <option key={wallet.id} value={wallet.user_wallet.id}>
+    <option key={wallet.user_wallet.id} value={wallet.user_wallet.id}>
       {wallet.username} Balance: ${wallet.user_wallet.balance}
     </option>
   ) : null
