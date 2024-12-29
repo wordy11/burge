@@ -77,10 +77,10 @@ export default function Footer() {
             <h2 className="text-2xl font-bold mb-4">Follow Us</h2>
             <ul>
               <li>
-                <a href="https://instagram.com" className="text-gray-400 hover:text-blue-500" target="_blank" rel="noopener noreferrer">Instagram</a>
+                <a href="https://www.instagram.com/fortisglobal1/" className="text-gray-400 hover:text-blue-500" target="_blank" rel="noopener noreferrer">Instagram</a>
               </li>
               <li>
-                <a href="https://linkedin.com" className="text-gray-400 hover:text-blue-500" target="_blank" rel="noopener noreferrer">Whatsapp</a>
+                <a href="https://wa.me/12702432385" className="text-gray-400 hover:text-blue-500" target="_blank" rel="noopener noreferrer">Whatsapp</a>
               </li>
             </ul>
           </div>
