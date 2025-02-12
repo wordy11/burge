@@ -19,14 +19,14 @@ export default function RootLayout({
       </Head>
       <body className={`${inter.className} antialiased bg-dark-gray-blue`}>
         <Providers>
-          <NavbarComponent />
+          {/* <NavbarComponent /> */}
           {/* <TradingViewComponent /> */}
-          <div className="lg:ml-20 lg:mr-20 md:ml-10 md:mr-10 sm:ml-5 sm:mr-5 space-4 bg-dark-gray-blue">
+          {/* <div className="lg:ml-20 lg:mr-20 md:ml-10 md:mr-10 sm:ml-5 sm:mr-5 space-4 bg-dark-gray-blue"> */}
             {children}
-          </div>
-          <ElfsightWidget />
-          <WhatsAppChat/>
-          <Footer />
+          {/* </div> */}
+          {/* <ElfsightWidget /> */}
+          {/* <WhatsAppChat/> */}
+          {/* <Footer /> */}
         </Providers>
       </body>
     </html>

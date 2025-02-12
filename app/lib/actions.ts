@@ -54,6 +54,9 @@ const AddPlanFormSchema = z.object({
   duration_in_months: z.coerce.number().gt(0, {
     message: "Duration must be a number",
   }),
+  gain: z.coerce.number().gt(0, {
+    message: "Gain must be a number",
+  })
 })
 
 export type State = {
@@ -111,6 +114,7 @@ export async function addPlan(previousState: State, formData: FormData) {
     description: formData.get('description'),
     price: parseFloat(formData.get('price') as string),
     duration_in_months: parseInt(formData.get('duration_in_months') as string, 10),
+    gain: parseFloat(formData.get('gain') as string),
   });
 
   if (!validatedFields.success) {
@@ -120,7 +124,7 @@ export async function addPlan(previousState: State, formData: FormData) {
     };
   }
 
-  const { name, description, price, duration_in_months } = validatedFields.data;
+  const { name, description, price, duration_in_months, gain } = validatedFields.data;
 
   // Send a request to create the plan
   const response = await fetch(`${Host}/api/plans/`, {
@@ -133,6 +137,7 @@ export async function addPlan(previousState: State, formData: FormData) {
       description,
       price,
       duration_in_months,
+      gain,
     }),
   });
 

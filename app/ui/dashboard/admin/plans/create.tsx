@@ -9,6 +9,7 @@ const CreatePlanForm: React.FC = () => {
   const [description, setDescription] = useState<string>('');
   const [price, setPrice] = useState<number>(0.0);
   const [durationInMonths, setDurationInMonths] = useState<number>(1);
+  const [gains, setGains] = useState<number>(0.0); // New state for gains
 
   // State to store errors, success message, and loading state
   const [message, setMessage] = useState<string | null>(null);
@@ -26,6 +27,7 @@ const CreatePlanForm: React.FC = () => {
     formData.append('description', description);
     formData.append('price', price.toString());
     formData.append('duration_in_months', durationInMonths.toString());
+    formData.append('gain', gains.toString()); // Add gains to the form data
 
     // Call the addPlan function to handle the plan creation
     const result = await addPlan(
@@ -131,6 +133,23 @@ const CreatePlanForm: React.FC = () => {
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
               min="1"
+            />
+          </div>
+
+          {/* New Gains Field */}
+          <div>
+            <label htmlFor="gain" className="block text-sm font-medium">
+              Gains (%)
+            </label>
+            <input
+              type="number"
+              id="gain"
+              name="gain"
+              value={gains}
+              onChange={(e) => setGains(parseFloat(e.target.value))}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+              min="0"
             />
           </div>
 
